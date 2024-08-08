@@ -1,4 +1,3 @@
-
 域名:  http://api.ubit.site 
 现货统一前缀 /v1/spot
 合约统一前缀 /v1/future-u
@@ -38,9 +37,7 @@ validate-signature: 1231312318f13dc27dbbd02c2cc51ff7059765ed12313131
 
 1、数据部分
 method: 大写的请求方法，例如：GET、POST、DELETE、PUT
-
 path: 按照path中顺序将所有value进行拼接。形如/test/{var1}/{var2}/的restful路径将按填入的实际参数后路径拼接，示例：/sign/test/bb/aa
-
 query: 按照key的字典序排序，将所有key=value进行拼接。示例：userName=dfdfdf&password=ggg
 
 body:   
