@@ -1,9 +1,6 @@
-
-
-
-域名:  http://api.ubit.site  
-现货统一前缀: /v1/spot  
-合约统一前缀: /v1/future-u  
+`域名`:  `http://api.ubit.site `   
+`现货统一前缀`: `/v1/spot`   
+`合约统一前缀`: `/v1/future-u`  
 
 ## 签名
 1、先通过用户中心申请appkey和secretkey，针对不同的调用，提供不同的appkey和secretkey。  
@@ -16,7 +13,7 @@
 具体支持那些协议，请参见下面列出  
 `HmacMD5、HmacSHA1、HmacSHA224、HmacSHA256(推荐)、HmacSHA384、HmacSHA512`
 
-`签名生成`  
+### 签名生成  
 以http://api.ubit.site/v1/spot 为例  
 以下是在linux bash环境下使用 echo openssl 和curl工具实现的一个调用接口下单的示例 appkey、secret仅供示范：
 appKey: uasdfk-76d0-4f6e-a6b2-asdfdas  
@@ -28,17 +25,17 @@ validate-recvwindow: 5000
 validate-timestamp: 1717234493000  
 validate-signature: 1231312318f13dc27dbbd02c2cc51ff7059765ed12313131  
 
-`请求数据`  
+### 请求数据 
        { type: 'LIMIT', timeInForce: 'GTC', side: 'BUY', symbol: 'btc_usdt', price: '69000', quantity: '1' }
 
-1、数据部分
-method: 大写的请求方法，例如：GET、POST、DELETE、PUT
+#### 1、数据部分  
+`method`: 大写的请求方法，例如：GET、POST、DELETE、PUT
 
-path: 按照path中顺序将所有value进行拼接。形如/test/{var1}/{var2}/的restful路径将按填入的实际参数后路径拼接，示例：/sign/test/bb/aa
+`path`: 按照path中顺序将所有value进行拼接。形如/test/{var1}/{var2}/的restful路径将按填入的实际参数后路径拼接，示例：/sign/test/bb/aa
 
-query: 按照key的字典序排序，将所有key=value进行拼接。示例：userName=dfdfdf&password=ggg
+`query`: 按照key的字典序排序，将所有key=value进行拼接。示例：userName=dfdfdf&password=ggg
 
-body:   
+`body`:   
     Json: 直接按JSON字符串不做转换或排序操作。
 
     x-www-form-urlencoded: 按照key的字典序排序，将所有key=value进行拼接，示例:userName=dfdfdf&password=ggg　
@@ -47,49 +44,45 @@ body:
 
 如果存在多种数据形式，则按照path、query、body的顺序进行再拼接，得到所有数据的拼接值。
 
-方法method示例：
-POST
+方法method示例： POST
 
-路径path示例:
-/v1/spot/order
+路径path示例: /v1/spot/order
 
-上述拼接值记作为path
+上述拼接值记作为 path
 
-参数通过query示例:
-symbol=btc_usdt
+参数通过query示例: symbol=btc_usdt
 
-上述值拼接记作query
+上述值拼接记作 query
 
-参数通过body示例：
+参数通过body示例：  
 x-www-form-urlencoded:
   
     symbol=btc_usdt&side=BUY&type=LIMIT&timeInForce=GTC&quantity=1&price=69000
 
     上述值拼接记作body
 
-json:
+`json`:
 
     {"symbol":"btc_usdt","side":"BUY","type":"LIMIT","timeInForce":"GTC","quantity":1,"price":69000}
 
     上述值拼接记作body
 
-# api-ubitex.com
-混合使用query与body(分为表单与json两种格式)  
+### 混合使用query与body(分为表单与json两种格式)  
 
-query:
+`query`:
 
 symbol=btc_usdt&side=BUY&type=LIMIT  
 
 上述拼接值记作query
 
-body:
+`body`:
 
-{"symbol":"btc_usdt","side":BUY,"type":"LIMIT"} 
+`{"symbol":"btc_usdt","side":BUY,"type":"LIMIT"}` 
 
 上述拼接值记作body
 
-query:
-symbol=btc_usdt&side=BUY&type=LIMIT
+`query`:  
+`symbol=btc_usdt&side=BUY&type=LIMIT`
 上述拼接值记作query
 
 整个数据最且拼接值由#符号分别与method、path、query、body进行拼接成#method、#path、#query、#body，
@@ -101,11 +94,12 @@ query无数据，body有数据：Y=#method#path#body
 
 query有数据，body有数据：Y=#method#path#query#body
 
-2、请求头部分 将key按照字母自然升序后，使用&方式拼接在一起，作为X。如：  
+#### 2、请求头部分  
+将key按照字母自然升序后，使用&方式拼接在一起，作为X。如：  
 
 validate-algorithms=HmacSHA256&validate-appkey=uasdfk-76d0-4f6e-a6b2-asdfdas&validate-recvwindow=5000&validate-timestamp=1641446237201
 
-3、生成签名  
+#### 3、生成签名  
 最终把需要进行加密的字符串，记作为original=XY
 
 最后将最终拼接值按照如下方法进行加密得到签名。
@@ -114,9 +108,9 @@ signature=org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(secretkey, ori
 
 将生成的签名singature放到请求头中，以validate-signature为Key，以singature为值。
 
-4、样例  
+#### 4、样例  
 签名原始报文样例：  
-validate-algorithms=HmacSHA256&validate-appkey=uasdfk-76d0-4f6e-a6b2-asdfdas&validate-recvwindow=60000&validate-timestamp=1666026215729#POST#/v1/spot/order/order#{"symbol":"BTC_USDT","side":"BUY","type":"LIMIT","timeInForce":"GTC","bizType":"SPOT","price":69000,"quantity":2}
+`validate-algorithms=HmacSHA256&validate-appkey=uasdfk-76d0-4f6e-a6b2-asdfdas&validate-recvwindow=60000&validate-timestamp=1666026215729#POST#/v1/spot/order/order#{"symbol":"BTC_USDT","side":"BUY","type":"LIMIT","timeInForce":"GTC","bizType":"SPOT","price":69000,"quantity":2}`
 
 请求报文样例：
 
