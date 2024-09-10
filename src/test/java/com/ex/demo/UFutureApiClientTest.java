@@ -1,5 +1,6 @@
 package com.ex.demo;
 
+import com.ex.api.dto.future.CreatePlanRequest;
 import com.google.gson.Gson;
 import com.ex.api.client.future.FutureApiClient;
 import com.ex.api.client.future.FutureUApiClientImpl;
@@ -76,7 +77,7 @@ public class UFutureApiClientTest {
 
     @Test
     public void orderDetail() {
-        CommonResponse commonResponse = client.orderDetail(275110136488455424L);
+        CommonResponse commonResponse = client.orderDetail(403744814222537792L);
         System.out.println("result:"+commonResponse);
     }
     @Test
@@ -88,7 +89,7 @@ public class UFutureApiClientTest {
 
     @Test
     public void orderCancel() {
-        CommonResponse commonResponse = client.orderCancel(275110136488455424L);
+        CommonResponse commonResponse = client.orderCancel(403744814222537792L);
         System.out.println("result:"+commonResponse);
     }
 
@@ -110,21 +111,23 @@ public class UFutureApiClientTest {
 
     @Test
     public void entrustCreatePlan() {
-        Map<String, String> params = new HashMap<>();
-        params.put("symbol","btc_usdt");
-        params.put("orderSide","BUY");
-        params.put("entrustType","TAKE_PROFIT");
-        params.put("origQty","1");
-        params.put("timeInForce","GTC");
-        params.put("triggerPriceType","INDEX_PRICE");
-        params.put("positionSide","LONG");
-        params.put("stopPrice","55");
-        CommonResponse commonResponse = client.entrustCreatePlan(params);
+        CreatePlanRequest request = new CreatePlanRequest();
+        request.setSymbol("btc_usdt");
+        request.setPrice("50000");
+        request.setStopPrice("51000");
+        request.setOrderSide("BUY");
+        request.setEntrustType("TAKE_PROFIT");
+        request.setOrigQty(2000);
+        request.setPositionSide("LONG");
+        request.setTimeInForce("GTC");
+        request.setTriggerPriceType("INDEX_PRICE");
+
+        CommonResponse commonResponse = client.entrustCreatePlan(request);
         System.out.println("result:"+commonResponse);
     }
     @Test
     public void entrustCancelPlan() {
-        CommonResponse commonResponse = client.entrustCancelPlan(275110136488455424L);
+        CommonResponse commonResponse = client.entrustCancelPlan(403745109316990016L);
         System.out.println("result:"+commonResponse);
     }
     @Test
@@ -144,21 +147,5 @@ public class UFutureApiClientTest {
         CommonResponse commonResponse = client.balanceDetail("usdt");
         System.out.println("result:"+commonResponse);
     }
-
-    @Test
-    public void createMockOrder(){
-        FuturePostOrderRequest request = FuturePostOrderRequest.builder().symbol("btc_usdt")
-                .origQty("8")
-                .orderType("LIMIT")
-                .timeInForce("GTC")
-                .price("64111.40")
-                .clientOrderId(System.currentTimeMillis()+"")
-                .orderSide("SELL")
-                .positionSide("LONG")
-                .build();
-        CommonResponse commonResponse = client.createMockOrder(request);
-        System.out.println("result:"+commonResponse);
-    }
-
 
 }

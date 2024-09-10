@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractOkHttpInterceptor implements Interceptor {
 
-    protected static final String appKey = "f1ebdcfe-ff0c-4db5-a1de-f8825afba4dd";
-    protected static final String secretKey = "4ba49b48e9400142765fa1cb7d31f13b6980cae5";
+    protected static final String appKey = "2fa91add-388c-44f2-8365-f4b72886c135";
+    protected static final String secretKey = "6fb7fc1dde997cc03e75a460d07184c9c9a14704";
     protected static final String encry = "HmacSHA256";
     protected static final String contentType = "application/json";
     protected static final String window = "6000";
@@ -48,11 +48,13 @@ public abstract class AbstractOkHttpInterceptor implements Interceptor {
                 requestBuilder.header(name, value);
             }
         }
-        Long time = System.currentTimeMillis();
+        Long time = 1725382088656L;
         String path = chain.request().url().uri().getPath();
         String jsonBody = getJsonBody(oldRequest);
         String query = getQuery(oldRequest);
         String signature = generateSign(String.valueOf(time), window, oldRequest.method().toUpperCase(), path, query, jsonBody);
+
+        System.out.println(signature);
 
         configHeader(requestBuilder, String.valueOf(time), signature);
 

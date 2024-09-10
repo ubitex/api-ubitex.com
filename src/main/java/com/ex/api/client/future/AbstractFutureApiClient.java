@@ -1,10 +1,8 @@
 package com.ex.api.client.future;
 
+import com.ex.api.dto.future.*;
 import com.google.gson.Gson;
 import com.ex.api.dto.CommonResponse;
-import com.ex.api.dto.future.FutureOrderCancelAllRequest;
-import com.ex.api.dto.future.FutureOrderCancelRequest;
-import com.ex.api.dto.future.FuturePostOrderRequest;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -22,7 +20,7 @@ public abstract class AbstractFutureApiClient implements FutureApiClient {
     }
     @Override
     public CommonResponse batchOrder(List<FuturePostOrderRequest> futurePostOrderRequestList){
-        return executeSync(getService().batchOrder(gson.toJson(futurePostOrderRequestList)));
+        return executeSync(getService().batchOrder(futurePostOrderRequestList));
     }
 
     @Override
@@ -50,7 +48,7 @@ public abstract class AbstractFutureApiClient implements FutureApiClient {
 
     @Override
     public CommonResponse cancelOrderBatch(List<Long> orderIdList, List<String> clientOrderIds){
-        return executeSync(getService().cancelOrderBatch(gson.toJson(orderIdList), gson.toJson(clientOrderIds)));
+        return executeSync(getService().cancelOrderBatch(CancelOrderBatchRequest.builder().orderIds(orderIdList).clientOrderIds(clientOrderIds).build()));
     }
 
     @Override
@@ -60,8 +58,8 @@ public abstract class AbstractFutureApiClient implements FutureApiClient {
     }
 
     @Override
-    public CommonResponse entrustCreatePlan(Map<String, String> params){
-        return executeSync(getService().entrustCreatePlan(params));
+    public CommonResponse entrustCreatePlan(CreatePlanRequest request){
+        return executeSync(getService().entrustCreatePlan(request));
     }
 
     @Override
@@ -84,14 +82,10 @@ public abstract class AbstractFutureApiClient implements FutureApiClient {
         return executeSync(getService().balanceDetail(coin));
     }
 
-    @Override
-    public CommonResponse createMockOrder(FuturePostOrderRequest request) {
-        return executeSync(getService().createMockOrder(request));
-    }
 
     @Override
-    public CommonResponse mergePosition(Map<String, String> params) {
-        return executeSync(getService().mergePosition(params));
+    public CommonResponse getPosition(Map<String, String> params){
+        return executeSync(getService().getPosition(params));
     }
 
     public CommonResponse executeSync(Call<CommonResponse> call) {

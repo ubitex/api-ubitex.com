@@ -13,22 +13,19 @@ import java.util.*;
 
 /**
  * USDT BASE Future
+ *
  * @create 2023/9/20 16:15
  */
 public class PositionApiClientTest {
-    Gson gson = new Gson();
     FutureApiClient client = new FutureUApiClientImpl(null);
 
+
     @Test
-    public void postOrder() {
+    public void getPosition() {
         Map<String, String> params = new HashMap<>();
         params.put("symbol", "btc_usdt");
-        params.put("mergeAmount", "111234567");
-        CommonResponse commonResponse = client.mergePosition(params);
-        System.out.println("result:"+commonResponse);
+        CommonResponse commonResponse = client.getPosition(params);
+        System.out.println("result:" + commonResponse);
     }
-
-
-
 
 }

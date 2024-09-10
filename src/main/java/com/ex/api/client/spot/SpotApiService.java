@@ -10,6 +10,11 @@ import retrofit2.http.*;
  */
 public interface SpotApiService {
 
+
+    @GET("/v1/spot/public/time")
+    Call<CommonResponse> getPublicTime();
+
+
     @POST("/v1/spot/order")
     Call<CommonResponse> postOrder(@Body SpotPostOrderRequest request);
 

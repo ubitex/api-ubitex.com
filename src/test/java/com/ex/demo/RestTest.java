@@ -1,5 +1,6 @@
 package com.ex.demo;
 
+import cn.hutool.core.util.IdUtil;
 import com.alibaba.fastjson.JSON;
 import com.ex.api.util.HttpUtil;
 import org.junit.Test;
@@ -15,15 +16,16 @@ import java.util.Map;
 public class RestTest {
 
     @Test
-    public void testpostOrder() {
-        String uri = "/v4/order";
+    public void testPostOrder() {
+        String uri = "/v1/spot/order";
         Map<String, Object> param = new HashMap<>();
         param.put("symbol", "btc_usdt");
+        param.put("clientOrderId", IdUtil.fastUUID());
         param.put("side", "BUY");
         param.put("type", "LIMIT");
         param.put("timeInForce", "GTC");
         param.put("bizType", "SPOT");
-        param.put("price", "3");
+        param.put("price", "11430");
         param.put("quantity", "2");
         System.out.println("json===="+ JSON.toJSONString(param));
         System.out.println("result====" + HttpUtil.post(uri,JSON.toJSONString(param)));
@@ -31,57 +33,53 @@ public class RestTest {
 
     @Test
     public void getOrder() {
-        String uri = "/v4/order/156201996458139136";
+        String uri = "/v1/spot/order/401878710881651008";
         System.out.println("result====" + HttpUtil.get(uri, null));
     }
 
     @Test
     public void queryOrder() {
-        String uri = "/v4/order";
+        String uri = "/v1/spot/order";
         Map<String, Object> param = new HashMap<>();
-        param.put("orderId", 156201996458139136L);
+        param.put("orderId", 401878710881651008L);
         System.out.println("result====" + HttpUtil.get(uri, param));
     }
 
     @Test
     public void delOrder() {
-        String uri = "/v4/order/156201996458139136";
+        String uri = "/v1/spot/order/403747058624101696";
         System.out.println("result====" + HttpUtil.delete(uri, null));
     }
 
     @Test
     public void batchOrderGet() {
-        String uri = "/v4/batch-order";
+        String uri = "/v1/spot/batch-order";
         Map<String, Object> param = new HashMap<>();
-        param.put("orderIds", "156201996458139136,12312313212");
+        param.put("orderIds", "401876438755871040,401653869310150976");
         System.out.println("result====" + HttpUtil.get(uri, param));
     }
 
     @Test
     public void batchOrderDel() {
-        String uri = "/v4/batch-order";
+        String uri = "/v1/spot/batch-order";
         Map<String, Object> param = new HashMap<>();
-        param.put("clientBatchId", "123123111");
-        param.put("orderIds", List.of(156201996458139136L, 12312313212L));
+        param.put("clientBatchId", "f8cdd5d7-eb77-4377-b5f3-14a2e10203ea");
+        param.put("orderIds", List.of(403747400422128960L,403747482995391808L));
         System.out.println("result====" + HttpUtil.deleteWithBody(uri, JSON.toJSONString(param)));
     }
 
     @Test
     public void getOpenOrder() {
-        for(int x=0;x<100;x++){
-            String uri = "/v4/open-order";
-            Map<String, Object> param = new HashMap<>();
-            //symbol=cmcx_usdt&bizType=SPOT
-            param.put("symbol","cmcx_usdt");
-            param.put("bizType","SPOT");
-            System.out.println("result====" + HttpUtil.get(uri, param));
-        }
-
+        String uri = "/v1/spot/open-order";
+        Map<String, Object> param = new HashMap<>();
+        param.put("symbol","btc_usdt");
+        param.put("bizType","SPOT");
+        System.out.println("result====" + HttpUtil.get(uri, param));
     }
 
     @Test
     public void delOpenOrder() {
-        String uri = "/v4/open-order";
+        String uri = "/v1/spot/open-order";
         Map<String, Object> param = new HashMap<>();
         param.put("bizType", "SPOT");
         System.out.println("result====" + HttpUtil.deleteWithBody(uri, JSON.toJSONString(param)));
@@ -89,7 +87,7 @@ public class RestTest {
 
     @Test
     public void getHistoryOrder() {
-        String uri = "/v4/history-order";
+        String uri = "/v1/spot/history-order";
         Map<String, Object> param = new HashMap<>();
         param.put("bizType", "SPOT");
         System.out.println("result====" + HttpUtil.get(uri, param));
@@ -98,7 +96,7 @@ public class RestTest {
 
     @Test
     public void getTrade() {
-        String uri = "/v4/trade";
+        String uri = "/v1/spot/trade";
         Map<String, Object> param = new HashMap<>();
         param.put("bizType", "SPOT");
         System.out.println("result====" + HttpUtil.get(uri, param));
@@ -107,7 +105,7 @@ public class RestTest {
 
     @Test
     public void getBalance() {
-        String uri = "/v4/balance";
+        String uri = "/v1/spot/balance";
         Map<String, Object> param = new HashMap<>();
         param.put("currency", "usdt");
         System.out.println("result====" + HttpUtil.get(uri, param));
@@ -115,7 +113,7 @@ public class RestTest {
 
     @Test
     public void getBalances() {
-        String uri = "/v4/balances";
+        String uri = "/v1/spot/balances";
         Map<String, Object> param = new HashMap<>();
         param.put("currencies", "usdt,btc");
         System.out.println("result====" + HttpUtil.get(uri, param));
@@ -130,58 +128,37 @@ public class RestTest {
 
     @Test
     public void deposit() {
-        String uri = "/v4/deposit/address";
+        String uri = "/v1/spot/deposit/address";
         Map<String, Object> param = new HashMap<>();
-        param.put("chain", "11111");
-        param.put("currency", "btc");
+        param.put("chain", "Tron");
+        param.put("currency", "usdt");
         System.out.println("result====" + HttpUtil.get(uri, param));
     }
 
     @Test
     public void withdraw() {
-        String uri = "/v4/withdraw";
+        String uri = "/v1/spot/withdraw";
         Map<String, Object> param = new HashMap<>();
-        param.put("symbol", "btc_usdt");
-        param.put("side", "BUY");
-        param.put("type", "LIMIT");
-        param.put("timeInForce", "GTC");
-        param.put("bizType", "SPOT");
-        param.put("price", "3");
-        param.put("quantity", "2");
+        param.put("chain", "Tron");
+        param.put("currency", "usdt");
+        param.put("amount", 10);
+        param.put("address", "TKr47rQg831zd1UAY3u5K71fXuXMEowFXW");
+
         System.out.println("json===="+ JSON.toJSONString(param));
         System.out.println("result====" + HttpUtil.post(uri,JSON.toJSONString(param)));
     }
 
     @Test
     public void transfer() {
-        String uri = "/v4/balance/transfer";
+        String uri = "/v1/spot/balance/transfer";
         Map<String, Object> param = new HashMap<>();
-        param.put("symbol", "btc_usdt");
-        param.put("side", "BUY");
-        param.put("type", "LIMIT");
-        param.put("timeInForce", "GTC");
-        param.put("bizType", "SPOT");
-        param.put("price", "3");
-        param.put("quantity", "2");
+        param.put("bizId", IdUtil.getSnowflakeNextIdStr());
+        param.put("from", "SPOT");
+        param.put("to", "FUTURES_U");
+        param.put("currency", "usdt");
+        param.put("amount", "10");
+        param.put("remark", "划转");
         System.out.println("json===="+ JSON.toJSONString(param));
         System.out.println("result====" + HttpUtil.post(uri,JSON.toJSONString(param)));
     }
-
-    @Test
-    public void accTransfer() {
-        String uri = "/v4/balance/account/transfer";
-        Map<String, Object> param = new HashMap<>();
-        param.put("symbol", "btc_usdt");
-        param.put("side", "BUY");
-        param.put("type", "LIMIT");
-        param.put("timeInForce", "GTC");
-        param.put("bizType", "SPOT");
-        param.put("price", "3");
-        param.put("quantity", "2");
-        System.out.println("json===="+ JSON.toJSONString(param));
-        System.out.println("result====" + HttpUtil.post(uri,JSON.toJSONString(param)));
-    }
-
-
-
 }

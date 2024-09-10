@@ -1,12 +1,11 @@
 package com.ex.api.client.future;
 
 import com.ex.api.dto.CommonResponse;
-import com.ex.api.dto.future.FutureOrderCancelAllRequest;
-import com.ex.api.dto.future.FutureOrderCancelRequest;
-import com.ex.api.dto.future.FuturePostOrderRequest;
+import com.ex.api.dto.future.*;
 import retrofit2.Call;
 import retrofit2.http.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,15 +13,11 @@ import java.util.Map;
  */
 public interface FutureApiService {
 
-    @POST("/v1/future-u/trade/order/create")
-    Call<CommonResponse> makeOrder(@QueryMap Map<String, String> params);
+    @POST("/v1/future-u/trade/v2/order/create")
+    Call<CommonResponse> postOrder(@Body FuturePostOrderRequest request);
 
-    @POST("/v1/future-u/trade/order/create")
-    Call<CommonResponse> postOrder(@Body FuturePostOrderRequest futurePostOrderRequest);
-
-    @POST("/v1/future-u/trade/order/create-batch")
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    Call<CommonResponse> batchOrder(@Query("list") String list);
+    @POST("/v1/future-u/trade/v2/order/create-batch")
+    Call<CommonResponse> batchOrder(@Body List<FuturePostOrderRequest> list);
 
     @GET("/v1/future-u/trade/order/list-history")
     Call<CommonResponse> orderListHistory(@QueryMap Map<String, String> params);
@@ -36,26 +31,23 @@ public interface FutureApiService {
     @GET("/v1/future-u/trade/order/list")
     Call<CommonResponse> orderList(@QueryMap Map<String, String> params);
 
-    @POST("/v1/future-u/trade/order/cancel")
+    @POST("/v1/future-u/trade/v2/order/cancel")
     Call<CommonResponse> orderCancel(@Body FutureOrderCancelRequest request);
 
-    @POST("/v1/future-u/trade/order/cancel-batch")
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    Call<CommonResponse> cancelOrderBatch(@Query("orderIds") String orderIds, @Query("clientOrderIds") String clientOrderIds);
+    @POST("/v1/future-u/trade/v2/order/cancel-batch")
+    Call<CommonResponse> cancelOrderBatch(@Body CancelOrderBatchRequest request);
 
-    @POST("/v1/future-u/trade/order/cancel-all")
+    @POST("/v1/future-u/trade/v2/order/cancel-all")
     Call<CommonResponse> allCancel(@Body FutureOrderCancelAllRequest request);
 
-    @POST("/v1/future-u/trade/entrust/create-plan")
-    @Headers("Content-Type: application/x-www-form-urlencoded")
-    Call<CommonResponse> entrustCreatePlan(@QueryMap Map<String, String> params);
 
-    @POST("/v1/future-u/trade/entrust/cancel-plan")
-    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @POST("/v1/future-u/trade/v2/entrust/create-plan")
+    Call<CommonResponse> entrustCreatePlan(@Body CreatePlanRequest request);
+
+    @DELETE("/v1/future-u/trade/v2/entrust/cancel-plan")
     Call<CommonResponse> entrustCancelPlan(@Query("entrustId") Long entrustId);
 
-    @POST("/v1/future-u/trade/entrust/cancel-all-plan")
-    @Headers("Content-Type: application/x-www-form-urlencoded")
+    @POST("/v1/future-u/trade/v2/entrust/cancel-all-plan")
     Call<CommonResponse> entrustCancelAllPlan(@Query("symbol") String symbol);
 
     @GET("/v1/future-u/user/account/info")
@@ -64,12 +56,6 @@ public interface FutureApiService {
     @GET("/v1/future-u/user/balance/detail")
     Call<CommonResponse> balanceDetail(@Query("coin") String coin);
 
-
-    @POST("/v1/future-u/trade/mock/trade")
-    Call<CommonResponse> createMockOrder(@Body FuturePostOrderRequest futurePostOrderRequest);
-
-    @POST("/v1/future-u/trade/position/merge")
-    Call<CommonResponse> mergePosition(@QueryMap Map<String, String> params);
     @GET("/v1/future-u/trade/position/list")
     Call<CommonResponse> getPosition(@QueryMap Map<String, String> params);
 }

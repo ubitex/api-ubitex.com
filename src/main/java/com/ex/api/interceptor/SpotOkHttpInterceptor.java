@@ -25,4 +25,10 @@ public class SpotOkHttpInterceptor extends AbstractOkHttpInterceptor {
         System.out.println("origion===" + origin);
         return HmacUtils.hmacSha256Hex(secretKey, origin);
     }
+    //
+    //public static void main(String[] args) {
+    //    String s = new SpotOkHttpInterceptor().generateSign("1725381898421", "6000", "GET", "v1/spot/public/time", "name=1&age=2", null);
+    //
+    //    System.out.println(s);
+    //}
 }

@@ -14,6 +14,12 @@ public class SpotApiClientTest {
     SpotApiClientImpl spotApiClient = new SpotApiClientImpl(null);
 
     @Test
+    public void testGetPublicTime() {
+        CommonResponse commonResponse = spotApiClient.getPublicTime();
+        System.out.println(commonResponse);
+    }
+
+    @Test
     public void testpostOrder() {
         SpotPostOrderRequest request = SpotPostOrderRequest.builder().symbol("btc_usdt")
                 .side("BUY")
@@ -29,13 +35,13 @@ public class SpotApiClientTest {
 
     @Test
     public void getOrder() {
-        CommonResponse commonResponse = spotApiClient.getOrder(363779203153731136L);
+        CommonResponse commonResponse = spotApiClient.getOrder(401878710881651008L);
         System.out.println("result:"+commonResponse);
     }
 
     @Test
     public void queryOrder() {
-        CommonResponse commonResponse = spotApiClient.queryOrder(363779203153731136L);
+        CommonResponse commonResponse = spotApiClient.queryOrder(401878710881651008L);
         System.out.println("result:"+commonResponse);
     }
 
