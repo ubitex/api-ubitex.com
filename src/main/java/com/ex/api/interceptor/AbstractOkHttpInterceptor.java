@@ -19,8 +19,8 @@ import java.util.stream.Collectors;
  */
 public abstract class AbstractOkHttpInterceptor implements Interceptor {
 
-    protected static final String appKey = "2fa91add-388c-44f2-8365-f4b72886c135";
-    protected static final String secretKey = "6fb7fc1dde997cc03e75a460d07184c9c9a14704";
+    protected static final String appKey = "enter your appkey";
+    protected static final String secretKey = "enter your secretKey";
     protected static final String encry = "HmacSHA256";
     protected static final String contentType = "application/json";
     protected static final String window = "6000";

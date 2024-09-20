@@ -12,11 +12,11 @@ import java.util.TreeMap;
  * @create 2022/10/28 10:48
  */
 public class HttpUtil {
-    private static final String appKey = "2fa91add-388c-44f2-8365-f4b72886c135";
-    private static final String secretKey = "6fb7fc1dde997cc03e75a460d07184c9c9a14704";
+    private static final String appKey = "enter your appkey";
+    private static final String secretKey = "enter your secretKey";
     private static final String encry = "HmacSHA256";
     private static final String contentType = "application/json";
-    private static final String baseUrl = "https://api.ubit.site";
+    private static final String baseUrl = "https://api.ubitex.com";
     private static final String window = "6000";
     static {
         GlobalHeaders.INSTANCE.clearHeaders();

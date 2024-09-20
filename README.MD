@@ -1,4 +1,4 @@
-`域名`:  `http://api.ubit.site `   
+`域名`:  `https://api.ubitex.com `   
 `现货统一前缀`: `/v1/spot`   
 `合约统一前缀`: `/v1/future-u`
 
@@ -130,7 +130,7 @@ signature=org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(secretkey, ori
 
 请求报文样例：
 
-    curl --location --request POST 'http://api.ubit.site/v1/spot/order' 
+    curl --location --request POST 'https://api.ubitex.com/v1/spot/order' 
     --header 'accept: */*' 
     --header 'Content-Type: application/json' 
     --header 'validate-algorithms: HmacSHA256' 
