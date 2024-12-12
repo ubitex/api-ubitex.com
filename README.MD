@@ -1,11 +1,11 @@
-`域名`:  `https://api.ubitex.com `   
+`域名`:  `https://api.noahex.com `   
 `现货统一前缀`: `/v1/spot`   
 `合约统一前缀`: `/v1/future-u`
 
 
 ## 文档
 
-https://ubitex.github.io/openapi-docs/#
+https://noahex.github.io/openapi-docs/#
 
 
 ## 签名
@@ -17,7 +17,7 @@ https://ubitex.github.io/openapi-docs/#
 ，有效时间目前相对简单统一固定为某个值。服务器收到请求时会判断请求中的时间戳，最长60秒，最小为2秒，如果是5000毫秒之前发出的，则请求会被认为无效。  
 这个时间窗口值可以通过发送可选参数recvWindow来设置。  
 另外，如果服务器计算得出客户端时间戳在服务器时间的‘未来’一秒以上，也会拒绝请求。  
-关于交易时效性 互联网状况并不100%可靠，不可完全依赖,因此你的程序本地到UBIT服务器的时延会有抖动。  
+关于交易时效性 互联网状况并不100%可靠，不可完全依赖,因此你的程序本地到noahex服务器的时延会有抖动。  
 这是我们设置recvwindow的目的所在，如果你从事高频交易，对交易时效性有较高的要求，可以灵活设置recvwindow以达到你的要求。
 不推荐使用5秒以上的recvwindow  
 5、加入algorithms (签名方法/算法)，用户计算签名是基于哈希的协议，推荐使用HmacSHA256。具体支持那些协议，请参见下面列出:   
@@ -25,7 +25,7 @@ https://ubitex.github.io/openapi-docs/#
 
 ### 签名生成
 
-以http://api.ubit.site/v1/spot 为例  
+以http://api.noahex.site/v1/spot 为例  
 以下是在linux bash环境下使用 echo openssl 和curl工具实现的一个调用接口下单的示例  
 appkey、secret仅供示范:  
 appKey: uasdfk-76d0-4f6e-a6b2-asdfdas    
@@ -130,7 +130,7 @@ signature=org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(secretkey, ori
 
 请求报文样例：
 
-    curl --location --request POST 'https://api.ubitex.com/v1/spot/order' 
+    curl --location --request POST 'https://api.noahex.com/v1/spot/order' 
     --header 'accept: */*' 
     --header 'Content-Type: application/json' 
     --header 'validate-algorithms: HmacSHA256' 
@@ -142,7 +142,7 @@ signature=org.apache.commons.codec.digest.HmacUtils.hmacSha256Hex(secretkey, ori
 
 注意事项：
 注意检查 Content-Type、签名原始报文中的参数格式、请求报文中的参数格式  
-Java sdk: http://git.ubit.site/backend/sdk-for-java.git
+Java sdk: http://git.noahex.site/backend/sdk-for-java.git
 
 # 响应代码
 
